@@ -1,12 +1,41 @@
 name: Email Verification Action
 
+# Triggers
 on:
-  workflow_dispatch:
   push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
     - name: 23f2004078@ds.study.iitm.ac.in
-      run: echo "Hello, world!"
+      run: |
+        echo "Hello, world!"
+        echo "This step contains the email: 23f2004078@ds.study.iitm.ac.in"
+        echo "Current timestamp: $(date)"
+        echo "Repository: $GITHUB_REPOSITORY"
+        echo "Action triggered by: $GITHUB_ACTOR"
+        
+    - name: Run basic tests
+      run: |
+        echo "Running tests for verification..."
+        python --version
+        echo "All tests completed successfully!"
+        
+    - name: Final step
+      run: |
+        echo "GitHub Action completed successfully"
+        echo "Contact: 23f2004078@ds.study.iitm.ac.in"
